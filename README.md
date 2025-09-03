@@ -1,38 +1,55 @@
-# Personal Porfolio Website
+# Personal Portfolio Website
 
-Check it out at: https://amandayu.tech/
+🚀 Check it out live: [https://portfolio-two-topaz-96.vercel.app](https://portfolio-two-topaz-96.vercel.app)
 
-Amanda Yu\
-Univeristy of Waterloo\
-Systems Design Engineering, 2025\
-Reach me at: amanda.yu@uwaterloo.ca
+---
 
-Created with ReactJS
-Deployed using Vercel
+## 👤 About Me
+**Krutharth R Kumar**  
+Aspiring Computer Science / Engineering student  
+Passionate about **AI, Data Science, and Full-Stack Development**  
+📧 Reach me at: **krutharth07@gmail.com**  
+🔗 GitHub: [@krutharth1047](https://github.com/krutharth1047)  
+🔗 LinkedIn: [krk2004](https://www.linkedin.com/in/krk2004/)  
 
+---
 
-# Getting Started with Create React App
+## ⚙️ Tech Stack
+- **Frontend:** React.js, HTML, CSS, JavaScript  
+- **Version Control:** Git, GitHub  
+- **Deployment:** Vercel  
+
+---
+
+## 🖥️ Projects
+This portfolio highlights some of my work, including:
+- 📊 Data Science Projects  
+- 💻 Full-Stack Development Projects  
+- 🤖 AI/ML Experiments  
+
+---
+
+## 🚀 Deployment
+Created with **ReactJS**  
+Deployed using **Vercel**  
+
+---
+
+## 🛠️ Getting Started (For Local Development)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
-
+### Available Scripts
 In the project directory, you can run:
 
-### `npm start`
+#### `npm start`
+Runs the app in development mode.  
+Open [http://localhost:3000](http://localhost:3000) to view in your browser.  
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+#### `npm run build`
+Builds the app for production in the `build` folder.  
+Optimized for best performance and ready to deploy.  
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+✨ Feel free to fork this repo and use it as inspiration for your own portfolio!
