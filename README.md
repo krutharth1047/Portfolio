@@ -6,7 +6,7 @@
 
 ## 👤 About Me
 **Krutharth R Kumar**  
-Aspiring Computer Science / Engineering student  
+Undergraduate Student at BMS Institute of Technology (BMSIT), Bengaluru
 Passionate about **AI, Data Science, and Full-Stack Development**  
 📧 Reach me at: **krutharth07@gmail.com**  
 🔗 GitHub: [@krutharth1047](https://github.com/krutharth1047)  
