@@ -1,15 +1,20 @@
 import React from "react"
 import "./styles/About.css";
+import { useScrollAnimation } from "../hooks/useScrollAnimation";
 
 export function About() {
+    const [titleRef, titleVisible] = useScrollAnimation({ threshold: 0.3 });
+    const [socialsRef, socialsVisible] = useScrollAnimation({ threshold: 0.3 });
+    const [contentRef, contentVisible] = useScrollAnimation({ threshold: 0.2 });
+
     return (
         <div className="about" id="about">
-        <h1>About Me</h1>
+        <h1 ref={titleRef} className={`fade-in-up ${titleVisible ? 'visible' : ''}`}>About Me</h1>
 
       {/*social media section*/}
       <section className="experience-socials">
           <div className="social-media-wrap">
-            <div className="social-icons">
+            <div ref={socialsRef} className={`social-icons fade-in ${socialsVisible ? 'visible' : ''}`}>
 
               <a href="https://github.com/krutharth1047"
                 className="social-icons-link github"
@@ -43,7 +48,7 @@ export function About() {
         </section>
 
         <div className="page-content">
-        <p >
+        <p ref={contentRef} className={`fade-in-up ${contentVisible ? 'visible' : ''}`}>
           <img
             id="profile"
             src="images/me.png"

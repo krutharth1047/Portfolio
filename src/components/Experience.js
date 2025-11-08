@@ -1,7 +1,10 @@
 import React from "react";
 import "../App.css";
+import { useScrollAnimation } from "../hooks/useScrollAnimation";
 
 export default function Experience() {
+  const [titleRef, titleVisible] = useScrollAnimation({ threshold: 0.3 });
+  const [contentRef, contentVisible] = useScrollAnimation({ threshold: 0.3 });
   const subject = "Interested in Resume";
   const body = `Hi Krutharth,
 	%0D%0A%0D%0A  I was on your personal website and I'm would love for you to send me your resume. Hope to connect!
@@ -9,8 +12,8 @@ export default function Experience() {
 
   return (
     <div className="experience">
-      <h1>Experience</h1>
-      <p>
+      <h1 ref={titleRef} className={`fade-in-up ${titleVisible ? 'visible' : ''}`}>Experience</h1>
+      <p ref={contentRef} className={`fade-in-up ${contentVisible ? 'visible' : ''}`}>
       I gained practical exposure as a <b>Data Science Intern</b> at IgeekS Technologies, 
   where I worked on data preprocessing, model development, and evaluation using Python tools. 
   The internship gave me hands-on experience applying machine learning techniques to real datasets 
