@@ -1,0 +1,138 @@
+.research {
+  padding: 5% 17%;
+  text-align: center;
+  align-items: center;
+  background: linear-gradient(90deg, rgb(28, 27, 27) 0%, rgb(26, 23, 23) 100%);
+  color: white;
+}
+
+.research h1 {
+  padding: 2% 0;
+  font-size: 50px;
+  font-family: "PT Sans", sans-serif;
+}
+
+.research-subtitle {
+  font-size: 18px;
+  color: #aaa;
+  margin-bottom: 40px;
+}
+
+.research-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.research-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 35px;
+  width: 450px;
+  text-align: left;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.research-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: #1f98f4;
+  box-shadow: 0 20px 40px rgba(31, 152, 244, 0.15);
+}
+
+.research-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, #1f98f4, #4ade80);
+}
+
+.research-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.research-badge.first-author {
+  background: rgba(31, 152, 244, 0.2);
+  color: #1f98f4;
+  border: 1px solid rgba(31, 152, 244, 0.3);
+}
+
+.research-badge.co-author {
+  background: rgba(74, 222, 128, 0.2);
+  color: #4ade80;
+  border: 1px solid rgba(74, 222, 128, 0.3);
+}
+
+.research-venue {
+  font-size: 14px;
+  color: #888;
+  margin-bottom: 10px;
+  font-family: 'Courier New', monospace;
+}
+
+.research-card h3 {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: white;
+  line-height: 1.3;
+}
+
+.research-card p {
+  font-size: 16px;
+  color: #bbb;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.research-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ddd;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 13px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.tag:hover {
+  background: rgba(31, 152, 244, 0.2);
+  border-color: #1f98f4;
+  color: #1f98f4;
+}
+
+@media only screen and (max-width: 960px) {
+  .research {
+    padding: 8% 5%;
+  }
+
+  .research h1 {
+    font-size: 36px;
+  }
+
+  .research-card {
+    width: 100%;
+    max-width: 500px;
+  }
+}

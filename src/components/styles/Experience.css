@@ -1,0 +1,128 @@
+.experience {
+  padding: 5% 17%;
+  text-align: left;
+  align-items: center;
+  font-size: 20px;
+  line-height: 32px;
+  background-color: white;
+  color: black;
+}
+
+.experience > h1 {
+  text-align: center;
+  font-size: 50px;
+  font-family: "PT Sans", sans-serif;
+  margin-bottom: 50px;
+  color: #242424;
+}
+
+.experience-card {
+  background: #fafafa;
+  border: 1px solid #e0e0e0;
+  border-radius: 16px;
+  padding: 35px;
+  margin-bottom: 30px;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.experience-card:hover {
+  transform: translateX(10px);
+  border-left: 4px solid #1f98f4;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.exp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.exp-title-section h3 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #242424;
+  margin-bottom: 4px;
+}
+
+.exp-company {
+  font-size: 16px;
+  color: #1f98f4;
+  font-weight: 500;
+}
+
+.exp-date {
+  font-size: 14px;
+  color: #888;
+  background: #f0f0f0;
+  padding: 4px 12px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.exp-details {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+}
+
+.exp-details li {
+  position: relative;
+  padding-left: 24px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #555;
+  line-height: 1.6;
+}
+
+.exp-details li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: #1f98f4;
+  font-weight: bold;
+}
+
+.exp-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.exp-tag {
+  background: rgba(31, 152, 244, 0.1);
+  color: #1f98f4;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 500;
+  border: 1px solid rgba(31, 152, 244, 0.2);
+  transition: all 0.3s ease;
+}
+
+.exp-tag:hover {
+  background: rgba(31, 152, 244, 0.2);
+  transform: translateY(-2px);
+}
+
+@media only screen and (max-width: 960px) {
+  .experience {
+    padding: 8% 5%;
+  }
+
+  .experience > h1 {
+    font-size: 36px;
+  }
+
+  .exp-header {
+    flex-direction: column;
+  }
+
+  .experience-card {
+    padding: 25px;
+  }
+}
