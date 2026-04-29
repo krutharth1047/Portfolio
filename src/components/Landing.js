@@ -4,19 +4,21 @@ import { Button } from './Button';
 import { ButtonExt } from './ButtonExt';
 import "./styles/Landing.css";
 
+// ✅ moved outside (IMPORTANT FIX)
+const phrases = ['Data Engineer'];
+
 function Landing() {
-    const subject = "Interested in Resume"
+    const subject = "Interested in Resume";
     const body = `Hi Krutharth,
 
-  I was on your personal website and I would love for you to send me your resume. Hope to connect!
+I was on your personal website and I would love for you to send me your resume. Hope to connect!
 
-  Thank you!`
+Thank you!`;
 
     // Typewriter effect
     const [displayText, setDisplayText] = useState('');
     const [phraseIndex, setPhraseIndex] = useState(0);
     const [isDeleting, setIsDeleting] = useState(false);
-    const phrases = ['Data Engineer'];
 
     useEffect(() => {
         const currentPhrase = phrases[phraseIndex];
@@ -29,20 +31,26 @@ function Landing() {
             setPhraseIndex((prev) => (prev + 1) % phrases.length);
         } else {
             const timeout = setTimeout(() => {
-                setDisplayText(prev => 
-                    isDeleting 
+                setDisplayText(prev =>
+                    isDeleting
                         ? prev.slice(0, -1)
                         : currentPhrase.slice(0, prev.length + 1)
                 );
             }, typeSpeed);
             return () => clearTimeout(timeout);
         }
-    }, [displayText, isDeleting, phraseIndex, phrases]);
+    }, [displayText, isDeleting, phraseIndex]); // ✅ removed 'phrases'
 
     return (
         <div className="landing-container">
-            <img id="background" src="images/landing-img.jpg" alt="Page cover photo, welcome to my portfolio."></img>
+            <img
+                id="background"
+                src="images/landing-img.jpg"
+                alt="Welcome to my portfolio"
+            />
+
             <h1 className="landing-title">Krutharth R Kumar</h1>
+
             <div className="typewriter-container">
                 <span className="typewriter-text">{displayText}</span>
                 <span className="typewriter-cursor">|</span>
@@ -63,13 +71,22 @@ function Landing() {
                 </div>
             </div>
 
-            {/*Landing page button*/}
+            {/* Buttons */}
             <div className="landing-btn">
-                <ButtonExt className="btns" buttonStyle="btn--outline" buttonSize="btn--large" path={`mailto:krutharth07@gmail.com?subject=${subject}&body=${body}`}>
+                <ButtonExt
+                    className="btns"
+                    buttonStyle="btn--outline"
+                    buttonSize="btn--large"
+                    path={`mailto:krutharth07@gmail.com?subject=${subject}&body=${body}`}
+                >
                     Contact Me
                 </ButtonExt>
 
-                <Button className="btns" buttonSize="btn--large" path="projects">
+                <Button
+                    className="btns"
+                    buttonSize="btn--large"
+                    path="projects"
+                >
                     Projects
                 </Button>
             </div>
@@ -77,4 +94,4 @@ function Landing() {
     )
 }
 
-export default Landing
+export default Landing;
