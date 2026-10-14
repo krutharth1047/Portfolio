@@ -22,12 +22,13 @@ const LEAF = `M ${C} ${C - 8}
 
 // A grimoire-style magic circle with a five-leaf clover at its heart.
 // `strike` changes on every sword slash in the hero and makes the circle flare.
+// Each spinning ring is its own stacked <svg> and the CSS rotates that element:
+// Safari ignores transform-origin on SVG groups, which knocked the rings off-centre.
 export default function MagicCircle({ strike }) {
   return (
     <div className="magic-circle" aria-hidden="true">
-      <svg viewBox="0 0 600 600">
+      <svg viewBox="0 0 600 600" className="mc-layer">
         <defs>
-          <path id="mc-ring" d={`M ${C} ${C} m -262 0 a 262 262 0 1 1 524 0 a 262 262 0 1 1 -524 0`} />
           <radialGradient id="mc-core">
             <stop offset="0%" style={{ stopColor: 'var(--accent)', stopOpacity: 0.35 }} />
             <stop offset="100%" style={{ stopColor: 'var(--accent)', stopOpacity: 0 }} />
@@ -35,8 +36,13 @@ export default function MagicCircle({ strike }) {
         </defs>
 
         <circle cx={C} cy={C} r="150" fill="url(#mc-core)" className="mc-core" />
+      </svg>
 
-        <g className="mc-outer">
+      <svg viewBox="0 0 600 600" className="mc-layer mc-outer">
+        <defs>
+          <path id="mc-ring" d={`M ${C} ${C} m -262 0 a 262 262 0 1 1 524 0 a 262 262 0 1 1 -524 0`} />
+        </defs>
+        <g>
           <circle cx={C} cy={C} r="292" className="mc-line" />
           <circle cx={C} cy={C} r="284" className="mc-line mc-line--thin" />
           <text className="mc-text">
@@ -46,8 +52,10 @@ export default function MagicCircle({ strike }) {
           </text>
           <circle cx={C} cy={C} r="244" className="mc-line mc-ticks" />
         </g>
+      </svg>
 
-        <g className="mc-inner">
+      <svg viewBox="0 0 600 600" className="mc-layer mc-inner">
+        <g>
           <circle cx={C} cy={C} r="226" className="mc-line" />
           <path d={starPath(226)} className="mc-line mc-star" />
           {[0, 72, 144, 216, 288].map((deg) => {
@@ -61,8 +69,10 @@ export default function MagicCircle({ strike }) {
           })}
           <circle cx={C} cy={C} r="118" className="mc-line mc-line--thin" />
         </g>
+      </svg>
 
-        <g className="mc-clover">
+      <svg viewBox="0 0 600 600" className="mc-layer mc-clover">
+        <g>
           {[0, 72, 144, 216, 288].map((deg) => (
             <path key={deg} d={LEAF} transform={`rotate(${deg} ${C} ${C})`} className="mc-leaf" />
           ))}

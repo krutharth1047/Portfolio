@@ -32,22 +32,19 @@
   opacity: 0.55;
   animation: circle-in 1.6s 0.3s var(--ease) both;
 }
-.magic-circle svg {
+.mc-layer {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   overflow: visible;
+  transform-origin: 50% 50%;
 }
 @keyframes circle-in {
   from {
     opacity: 0;
     transform: translateY(-50%) scale(0.85) rotate(-20deg);
   }
-}
-.mc-outer,
-.mc-inner,
-.mc-clover {
-  transform-box: view-box;
-  transform-origin: 300px 300px;
 }
 .mc-outer {
   animation: spin 120s linear infinite;
