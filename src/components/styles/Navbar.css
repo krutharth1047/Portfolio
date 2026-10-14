@@ -39,19 +39,34 @@
 .nav__logo {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.25rem;
-  letter-spacing: 0.02em;
+  color: var(--text);
 }
-.nav__logo-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 12px var(--accent);
-  transform: translateY(5px);
+.logo {
+  display: block;
+  height: 44px;
+  width: auto;
+  overflow: visible;
+}
+.logo__text {
+  fill: currentColor;
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: 80px;
+  letter-spacing: -1px;
+}
+.logo__slash line {
+  stroke: currentColor;
+  stroke-width: 9;
+  transition: stroke 0.3s;
+}
+.logo__slash {
+  transition: transform 0.4s var(--ease);
+}
+.nav__logo:hover .logo__slash line {
+  stroke: var(--accent);
+}
+.nav__logo:hover .logo__slash {
+  transform: translate(3px, -5px);
 }
 
 .nav__links {

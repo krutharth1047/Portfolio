@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { sections, resumeMailto } from '../data/content';
 import { useActiveSection, scrollToId } from '../hooks/interactions';
+import Logo from './Logo';
 import './styles/Navbar.css';
 
 export function Navbar({ onOpenPalette, simple = false }) {
@@ -36,8 +37,7 @@ export function Navbar({ onOpenPalette, simple = false }) {
       <div className="nav__progress" style={{ transform: `scaleX(${progress})` }} />
       <div className="nav__inner">
         <a href="/#home" className="nav__logo" onClick={go('home')} aria-label="Back to top">
-          <span className="nav__logo-mark">KRK</span>
-          <span className="nav__logo-dot" />
+          <Logo />
         </a>
 
         <nav className="nav__links" aria-label="Sections">
