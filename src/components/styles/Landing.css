@@ -19,6 +19,111 @@
   -webkit-mask-image: radial-gradient(ellipse at 60% 45%, #000 35%, transparent 80%);
 }
 
+/* grimoire magic circle */
+.magic-circle {
+  position: absolute;
+  z-index: -2;
+  right: -140px;
+  top: 50%;
+  width: min(760px, 62vw);
+  aspect-ratio: 1;
+  transform: translateY(-50%);
+  pointer-events: none;
+  opacity: 0.55;
+  animation: circle-in 1.6s 0.3s var(--ease) both;
+}
+.magic-circle svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+@keyframes circle-in {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) scale(0.85) rotate(-20deg);
+  }
+}
+.mc-outer,
+.mc-inner,
+.mc-clover {
+  transform-box: view-box;
+  transform-origin: 300px 300px;
+}
+.mc-outer {
+  animation: spin 120s linear infinite;
+}
+.mc-inner {
+  animation: spin 80s linear infinite reverse;
+}
+.mc-clover {
+  animation: clover-breathe 6s ease-in-out infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes clover-breathe {
+  50% {
+    transform: scale(1.06);
+    filter: drop-shadow(0 0 14px rgba(var(--accent-rgb), 0.55));
+  }
+}
+.mc-line {
+  fill: none;
+  stroke: rgba(var(--accent-2-rgb), 0.45);
+  stroke-width: 1.5;
+}
+.mc-line--thin {
+  stroke-width: 0.8;
+  stroke: rgba(var(--accent-2-rgb), 0.3);
+}
+.mc-ticks {
+  stroke-width: 10;
+  stroke-dasharray: 1.5 9;
+  stroke: rgba(var(--accent-2-rgb), 0.35);
+}
+.mc-star {
+  stroke: rgba(var(--accent-rgb), 0.45);
+  stroke-width: 1.2;
+}
+.mc-text {
+  fill: rgba(var(--accent-2-rgb), 0.7);
+  font-family: var(--font-mono);
+  font-size: 15px;
+  letter-spacing: 2px;
+}
+.mc-node {
+  fill: var(--bg);
+  stroke: rgba(var(--accent-2-rgb), 0.55);
+  stroke-width: 1.2;
+}
+.mc-node-dot {
+  fill: var(--accent);
+}
+.mc-leaf {
+  fill: rgba(20, 6, 10, 0.85);
+  stroke: rgba(var(--accent-2-rgb), 0.75);
+  stroke-width: 1.4;
+}
+.magic-circle__flash {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(var(--accent-rgb), 0.35), transparent 60%);
+  animation: flare 0.7s var(--ease) both;
+}
+@keyframes flare {
+  from {
+    opacity: 1;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.15);
+  }
+}
+
 .hero__glow {
   position: absolute;
   z-index: -2;
@@ -27,7 +132,7 @@
   right: -260px;
   top: -320px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(var(--accent-2-rgb), 0.18), transparent 60%);
+  background: radial-gradient(circle, rgba(var(--accent-rgb), 0.16), transparent 60%);
   filter: blur(20px);
   pointer-events: none;
   animation: drift 14s ease-in-out infinite alternate;
@@ -84,7 +189,7 @@
 .hero__name {
   display: block;
   font-size: clamp(2.8rem, 8.4vw, 6.4rem);
-  background: linear-gradient(100deg, #fff 30%, rgba(var(--accent-rgb), 0.95) 60%, var(--accent-2) 90%);
+  background: linear-gradient(100deg, #fff 35%, var(--accent) 65%, var(--accent-2) 92%);
   background-size: 200% 100%;
   -webkit-background-clip: text;
   background-clip: text;
@@ -255,6 +360,12 @@
 @media (max-width: 720px) {
   .hero {
     padding-bottom: 96px;
+  }
+  .magic-circle {
+    width: 130vw;
+    right: -55vw;
+    top: 34%;
+    opacity: 0.3;
   }
   .hero__stats {
     grid-template-columns: repeat(2, minmax(0, 1fr));

@@ -63,9 +63,14 @@ export default function About() {
                   </div>
                   <p>
                     {e.degree}
-                    {e.detail && <span className="chip chip--accent">{e.detail}</span>}
                     {e.current && <span className="chip chip--live">Now</span>}
                   </p>
+                  {(e.course || e.detail) && (
+                    <p className="edu__grade">
+                      {e.course && <span>{e.course}</span>}
+                      {e.detail && <span className="chip chip--accent">{e.detail}</span>}
+                    </p>
+                  )}
                   <span className="muted small">{e.place}</span>
                 </div>
               </Reveal>

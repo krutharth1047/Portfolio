@@ -9,10 +9,13 @@
   --text-2: #b9bfcd;
   --muted: #858ca0;
 
-  --accent: #7cf3c4;
-  --accent-rgb: 124, 243, 196;
-  --accent-2: #7aa2ff;
-  --accent-2-rgb: 122, 162, 255;
+  /* Black Clover-inspired: anti-magic crimson + grimoire gold */
+  --accent: #ff4d5e;
+  --accent-rgb: 255, 77, 94;
+  --accent-2: #f2c14e;
+  --accent-2-rgb: 242, 193, 78;
+  --good: #5fd6a0;
+  --llm: #7aa2ff;
   --warn: #e0894c;
 
   /* chart colours, validated for CVD separation on --surface */

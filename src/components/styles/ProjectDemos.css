@@ -240,7 +240,7 @@
   word-break: break-word;
 }
 .bridge__check .ok {
-  color: var(--accent);
+  color: var(--good);
 }
 .bridge__check .bad {
   color: var(--unfav);
@@ -278,8 +278,8 @@
   border: 1.5px solid var(--border-strong);
 }
 .flow__stage--end .flow__node {
-  border-color: rgba(var(--accent-rgb), 0.7);
-  box-shadow: 0 0 16px rgba(var(--accent-rgb), 0.35);
+  border-color: var(--good);
+  box-shadow: 0 0 16px rgba(95, 214, 160, 0.35);
 }
 .flow__name {
   position: absolute;
@@ -294,7 +294,7 @@
   top: 24%;
   transform: translate(-50%, -190%);
   font-size: 0.65rem;
-  color: var(--accent-2);
+  color: var(--llm);
   white-space: nowrap;
 }
 .flow__exc {
@@ -319,11 +319,14 @@
   animation: dot-in 0.3s var(--ease);
 }
 .flow__dot.is-llm {
-  background: var(--accent-2);
+  background: var(--llm);
+}
+.llm {
+  color: var(--llm);
 }
 .flow__dot.is-posted {
-  background: var(--accent);
-  box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.8);
+  background: var(--good);
+  box-shadow: 0 0 10px rgba(95, 214, 160, 0.8);
 }
 .flow__dot.is-exc {
   background: var(--warn);

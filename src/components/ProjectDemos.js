@@ -332,11 +332,11 @@ export function InvoiceFlow() {
           <span className="small muted">processed</span>
         </div>
         <div>
-          <span className="mono accent">{finished.length ? Math.round((touchless / finished.length) * 100) : 0}%</span>
+          <span className="mono good">{finished.length ? Math.round((touchless / finished.length) * 100) : 0}%</span>
           <span className="small muted">touchless</span>
         </div>
         <div>
-          <span className="mono accent-2">{llmAssisted}</span>
+          <span className="mono llm">{llmAssisted}</span>
           <span className="small muted">LLM-assisted</span>
         </div>
         <div>

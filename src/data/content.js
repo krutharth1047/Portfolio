@@ -31,7 +31,7 @@ export const stats = [
   { value: 2, label: 'Publications', sub: 'IEEE · Springer' },
   { value: 6, label: 'Projects', sub: 'on GitHub' },
   { value: 18, suffix: 'k+', label: 'Records analysed', sub: 'at Deloai' },
-  { value: 8.51, decimals: 2, label: 'BE GPA', sub: 'out of 10' },
+  { value: 50, suffix: 'k+', label: 'Test records generated', sub: 'synthetic, in Python' },
 ];
 
 export const education = [
@@ -45,6 +45,8 @@ export const education = [
   {
     school: 'Yonsei University',
     degree: 'Yonsei International Summer School',
+    course: 'Introduction to Machine Learning',
+    detail: 'Grade A · 4.0/4.3',
     place: 'Seoul, South Korea',
     dates: 'Jun 2026 – Aug 2026',
     logo: 'images/yonsei-logo.png',
@@ -69,10 +71,11 @@ export const experience = [
     kind: 'work',
     points: [
       "Manage the restaurant's Instagram account, creating and publishing content to attract new guests.",
+      'Set up an influencer collaboration: hosted a local food creator and co-published an Instagram collab post to reach their audience.',
       'Serve guests, run the bar and handle cash and card payments at the till.',
       'Keep track of bar and kitchen stock levels.',
     ],
-    tags: ['Social media', 'Content', 'Hospitality', 'Stock control'],
+    tags: ['Social media', 'Influencer marketing', 'Content', 'Hospitality', 'Stock control'],
   },
   {
     company: 'Deloai Private Limited',

@@ -148,6 +148,10 @@
 .edu__top .mono {
   font-size: 0.75rem;
 }
+.edu__body p.edu__grade {
+  margin-top: 0;
+  font-size: 0.85rem;
+}
 .edu__body p {
   color: var(--text-2);
   font-size: 0.92rem;

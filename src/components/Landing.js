@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import DataField from './DataField';
+import React, { useCallback, useEffect, useState } from 'react';
+import AntiMagicField from './AntiMagicField';
+import MagicCircle from './MagicCircle';
 import { profile, stats } from '../data/content';
 import { useCountUp, usePrefersReducedMotion, scrollToId } from '../hooks/interactions';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
@@ -50,10 +51,13 @@ export default function Landing() {
   const reducedMotion = usePrefersReducedMotion();
   const typed = useTypewriter(profile.roles, reducedMotion);
   const [statsRef, statsVisible] = useScrollAnimation({ threshold: 0.4 });
+  const [strike, setStrike] = useState(0);
+  const onSlash = useCallback(() => setStrike((n) => n + 1), []);
 
   return (
     <section className="hero" id="home">
-      <DataField reducedMotion={reducedMotion} />
+      <MagicCircle strike={strike} />
+      <AntiMagicField reducedMotion={reducedMotion} onSlash={onSlash} />
       <div className="hero__glow" aria-hidden="true" />
 
       <div className="hero__content container">
@@ -111,7 +115,7 @@ export default function Landing() {
       </div>
 
       <p className="hero__hint mono" aria-hidden="true">
-        move your cursor · click the background
+        move to wield anti-magic · click to slash
       </p>
       <button type="button" className="hero__scroll" onClick={() => scrollToId('about')} aria-label="Scroll to About">
         <span />

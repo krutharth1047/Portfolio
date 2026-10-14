@@ -24,13 +24,19 @@ const COMMANDS = {
     '  skills        my toolkit',
     '  languages     spoken languages',
     '  interests     life outside the terminal',
+    '  grimoire      ???',
     '  contact       how to reach me',
     '  open <x>      github | linkedin | email | <project name>',
     '  goto <x>      scroll to a section',
     '  clear         clear the screen',
   ],
   whoami: () => [profile.name, profile.title, profile.location, '', profile.availability + '.'],
-  education: () => education.flatMap((e) => [`▸ ${e.school}`, `  ${e.degree}${e.detail ? ` · ${e.detail}` : ''} · ${e.dates}`]),
+  education: () =>
+    education.flatMap((e) => [
+      `▸ ${e.school}`,
+      `  ${e.degree} · ${e.dates}`,
+      ...(e.course || e.detail ? [`  ${[e.course, e.detail].filter(Boolean).join(' · ')}`] : []),
+    ]),
   experience: () => experience.flatMap((e) => [`▸ ${e.role} @ ${e.company} (${e.dates})`, ...e.points.map((p) => `  - ${p}`)]),
   projects: () => [
     ...featuredProjects.map((p) => `★ ${p.name}: ${p.tagline}`),
@@ -47,6 +53,16 @@ const COMMANDS = {
   'cat cv.pdf': () => ["binary file. try 'open email' to ask me for a copy."],
   sudo: () => ['nice try. permission denied (but I am open to an internship offer).'],
   'sudo hire krutharth': () => ['[sudo] password for recruiter: ********', 'access granted ✓ opening email…'],
+  grimoire: () => [
+    '      ♣ the five-leaf grimoire opens…',
+    '',
+    '   no magic? no problem. just anti-magic,',
+    '   a lot of SQL and refusing to give up.',
+    '',
+    '   "Surpass your limits. Right here, right now."',
+    '',
+    "   (try clicking the hero background to swing the sword)",
+  ],
   coffee: () => ['☕ brewing… done. Amsterdam runs on stroopwafels and coffee.'],
 };
 
