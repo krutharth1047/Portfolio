@@ -1,63 +1,99 @@
-import React from "react";
-import "../App.css";
-import { useScrollAnimation } from "../hooks/useScrollAnimation";
-import "./styles/Experience.css";
+import React, { useState } from 'react';
+import Reveal from './Reveal';
+import { experience } from '../data/content';
+import './styles/Experience.css';
+
+const FILTERS = [
+  { id: 'all', label: 'Everything' },
+  { id: 'data', label: 'Data roles' },
+  { id: 'work', label: 'Part-time' },
+];
 
 export default function Experience() {
-  const [titleRef, titleVisible] = useScrollAnimation({ threshold: 0.3 });
-  const [exp1Ref, exp1Visible] = useScrollAnimation({ threshold: 0.2 });
-  const [exp2Ref, exp2Visible] = useScrollAnimation({ threshold: 0.2 });
+  const [filter, setFilter] = useState('all');
+  const [open, setOpen] = useState(
+    () => new Set(experience.map((e) => e.company))
+  );
+  const shown = experience.filter((e) => filter === 'all' || e.kind === filter);
 
   return (
-    <div className="experience" id="experience">
-      <h1 ref={titleRef} className={`fade-in-up ${titleVisible ? 'visible' : ''}`}>Experience</h1>
+    <section className="section experience" id="experience">
+      <div className="container">
+        <Reveal className="section-head">
+          <span className="eyebrow mono">02 · experience</span>
+          <h2>Where I've worked</h2>
+        </Reveal>
 
-      {/* Deloai Internship */}
-      <div ref={exp1Ref} className={`experience-card fade-in-up ${exp1Visible ? 'visible' : ''}`}>
-        <div className="exp-header">
-          <div className="exp-title-section">
-            <h3>Data Analyst Intern</h3>
-            <span className="exp-company">Deloai Private Limited</span>
-          </div>
-          <span className="exp-date">Jan 2026 – Apr 2026</span>
-        </div>
-        <ul className="exp-details">
-          <li>Designed and implemented an end-to-end data analytics pipeline for a SaaS-based EdTech platform</li>
-          <li>Generated and processed large-scale synthetic datasets using Python for user behavior simulation</li>
-          <li>Designed relational database schema in MySQL and performed SQL-based KPI analysis (DAU, retention, placement rate)</li>
-          <li>Built interactive Tableau dashboards to visualize user engagement and business metrics</li>
-          <li>Applied advanced analytics including user segmentation, cohort analysis, and churn prediction using logistic regression</li>
-        </ul>
-        <div className="exp-tags">
-          <span className="exp-tag">Python</span>
-          <span className="exp-tag">SQL</span>
-          <span className="exp-tag">MySQL</span>
-          <span className="exp-tag">Tableau</span>
-          <span className="exp-tag">Data Analytics</span>
-        </div>
-      </div>
+        <Reveal className="segmented" role="tablist" aria-label="Filter experience">
+          {FILTERS.map((f) => (
+            <button
+              key={f.id}
+              type="button"
+              role="tab"
+              aria-selected={filter === f.id}
+              className={filter === f.id ? 'is-active' : ''}
+              onClick={() => setFilter(f.id)}
+            >
+              {f.label}
+            </button>
+          ))}
+        </Reveal>
 
-      {/* Igeek Technologies Internship */}
-      <div ref={exp2Ref} className={`experience-card fade-in-up ${exp2Visible ? 'visible' : ''}`}>
-        <div className="exp-header">
-          <div className="exp-title-section">
-            <h3>Data Science Intern</h3>
-            <span className="exp-company">Igeek Technologies</span>
-          </div>
-          <span className="exp-date">Oct 2024 – Dec 2024</span>
-        </div>
-        <ul className="exp-details">
-          <li>Performed exploratory data analysis on image datasets using Python (NumPy, Pandas, Matplotlib)</li>
-          <li>Executed data preprocessing and feature extraction for machine learning workflows</li>
-          <li>Worked on end-to-end ML pipeline design including data preparation and evaluation</li>
-        </ul>
-        <div className="exp-tags">
-          <span className="exp-tag">Python</span>
-          <span className="exp-tag">NumPy</span>
-          <span className="exp-tag">Pandas</span>
-          <span className="exp-tag">Scikit-learn</span>
-        </div>
+        <ol className="timeline">
+          {shown.map((job, i) => {
+            const expanded = open.has(job.company);
+            return (
+              <Reveal as="li" key={job.company} delay={i * 90} className={`timeline__item ${job.current ? 'is-current' : ''}`}>
+                <span className="timeline__dot" />
+                <article className="card exp-card">
+                  <button
+                    type="button"
+                    className="exp-card__head"
+                    aria-expanded={expanded}
+                    onClick={() =>
+                      setOpen((prev) => {
+                        const next = new Set(prev);
+                        if (next.has(job.company)) next.delete(job.company);
+                        else next.add(job.company);
+                        return next;
+                      })
+                    }
+                  >
+                    <div>
+                      <h3>{job.role}</h3>
+                      <span className="exp-card__company">
+                        {job.company}
+                        {job.note && <span className="muted"> · {job.note}</span>}
+                      </span>
+                    </div>
+                    <div className="exp-card__meta">
+                      <span className="mono">{job.dates}</span>
+                      <span className="muted small">{job.place}</span>
+                    </div>
+                    <span className={`exp-card__chev ${expanded ? 'is-open' : ''}`} aria-hidden="true" />
+                  </button>
+                  <div className={`collapse ${expanded ? 'is-open' : ''}`}>
+                    <div className="collapse__inner">
+                      <ul className="bullets">
+                        {job.points.map((p) => (
+                          <li key={p}>{p}</li>
+                        ))}
+                      </ul>
+                      <div className="chips">
+                        {job.tags.map((t) => (
+                          <span key={t} className="chip">
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              </Reveal>
+            );
+          })}
+        </ol>
       </div>
-    </div>
+    </section>
   );
 }

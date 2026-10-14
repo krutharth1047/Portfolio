@@ -1,97 +1,121 @@
-import React, { useState, useEffect } from 'react'
-import "../App.css";
-import { Button } from './Button';
-import { ButtonExt } from './ButtonExt';
-import "./styles/Landing.css";
+import React, { useEffect, useState } from 'react';
+import DataField from './DataField';
+import { profile, stats } from '../data/content';
+import { useCountUp, usePrefersReducedMotion, scrollToId } from '../hooks/interactions';
+import { useScrollAnimation } from '../hooks/useScrollAnimation';
+import './styles/Landing.css';
 
-// ✅ moved outside (IMPORTANT FIX)
-const phrases = ['Data Engineer'];
+function useTypewriter(words, reducedMotion) {
+  const [text, setText] = useState(reducedMotion ? words[0] : '');
+  const [index, setIndex] = useState(0);
+  const [deleting, setDeleting] = useState(false);
 
-function Landing() {
-    const subject = "Interested in Resume";
-    const body = `Hi Krutharth,
+  useEffect(() => {
+    if (reducedMotion) return undefined;
+    const word = words[index];
+    let delay = deleting ? 40 : 85;
+    if (!deleting && text === word) delay = 1800;
+    if (deleting && text === '') delay = 300;
 
-I was on your personal website and I would love for you to send me your resume. Hope to connect!
+    const t = setTimeout(() => {
+      if (!deleting && text === word) setDeleting(true);
+      else if (deleting && text === '') {
+        setDeleting(false);
+        setIndex((i) => (i + 1) % words.length);
+      } else {
+        setText(deleting ? word.slice(0, text.length - 1) : word.slice(0, text.length + 1));
+      }
+    }, delay);
+    return () => clearTimeout(t);
+  }, [text, deleting, index, words, reducedMotion]);
 
-Thank you!`;
-
-    // Typewriter effect
-    const [displayText, setDisplayText] = useState('');
-    const [phraseIndex, setPhraseIndex] = useState(0);
-    const [isDeleting, setIsDeleting] = useState(false);
-
-    useEffect(() => {
-        const currentPhrase = phrases[phraseIndex];
-        const typeSpeed = isDeleting ? 50 : 100;
-
-        if (!isDeleting && displayText === currentPhrase) {
-            setTimeout(() => setIsDeleting(true), 2000);
-        } else if (isDeleting && displayText === '') {
-            setIsDeleting(false);
-            setPhraseIndex((prev) => (prev + 1) % phrases.length);
-        } else {
-            const timeout = setTimeout(() => {
-                setDisplayText(prev =>
-                    isDeleting
-                        ? prev.slice(0, -1)
-                        : currentPhrase.slice(0, prev.length + 1)
-                );
-            }, typeSpeed);
-            return () => clearTimeout(timeout);
-        }
-    }, [displayText, isDeleting, phraseIndex]); // ✅ removed 'phrases'
-
-    return (
-        <div className="landing-container">
-            <img
-                id="background"
-                src="images/landing-img.jpg"
-                alt="Welcome to my portfolio"
-            />
-
-            <h1 className="landing-title">Krutharth R Kumar</h1>
-
-            <div className="typewriter-container">
-                <span className="typewriter-text">{displayText}</span>
-                <span className="typewriter-cursor">|</span>
-            </div>
-
-            <div className="landing-stats">
-                <div className="stat-item">
-                    <span className="stat-number">2</span>
-                    <span className="stat-label">Publications</span>
-                </div>
-                <div className="stat-item">
-                    <span className="stat-number">4</span>
-                    <span className="stat-label">Projects</span>
-                </div>
-                <div className="stat-item">
-                    <span className="stat-number">2</span>
-                    <span className="stat-label">Internships</span>
-                </div>
-            </div>
-
-            {/* Buttons */}
-            <div className="landing-btn">
-                <ButtonExt
-                    className="btns"
-                    buttonStyle="btn--outline"
-                    buttonSize="btn--large"
-                    path={`mailto:krutharth07@gmail.com?subject=${subject}&body=${body}`}
-                >
-                    Contact Me
-                </ButtonExt>
-
-                <Button
-                    className="btns"
-                    buttonSize="btn--large"
-                    path="projects"
-                >
-                    Projects
-                </Button>
-            </div>
-        </div>
-    )
+  return text;
 }
 
-export default Landing;
+function Stat({ stat, start, delay }) {
+  const value = useCountUp(stat.value, start, { decimals: stat.decimals || 0, duration: 1400 + delay });
+  return (
+    <div className="stat">
+      <span className="stat__value">
+        {value}
+        {stat.suffix}
+      </span>
+      <span className="stat__label">{stat.label}</span>
+      <span className="stat__sub">{stat.sub}</span>
+    </div>
+  );
+}
+
+export default function Landing() {
+  const reducedMotion = usePrefersReducedMotion();
+  const typed = useTypewriter(profile.roles, reducedMotion);
+  const [statsRef, statsVisible] = useScrollAnimation({ threshold: 0.4 });
+
+  return (
+    <section className="hero" id="home">
+      <DataField reducedMotion={reducedMotion} />
+      <div className="hero__glow" aria-hidden="true" />
+
+      <div className="hero__content container">
+        <a
+          className="hero__badge"
+          href="#contact"
+          onClick={(e) => {
+            e.preventDefault();
+            scrollToId('contact');
+          }}
+        >
+          <span className="pulse-dot" />
+          {profile.availability}
+        </a>
+
+        <h1 className="hero__title">
+          <span className="hero__hi">Hi, I'm</span>
+          <span className="hero__name">{profile.name}</span>
+        </h1>
+
+        <p className="hero__typed" aria-label={`I build ${profile.roles.join(', ')}`}>
+          <span className="mono muted">~/amsterdam $</span> I build{' '}
+          <span className="hero__typed-word">{typed}</span>
+          <span className="caret" aria-hidden="true" />
+        </p>
+
+        <p className="hero__summary">{profile.summary}</p>
+
+        <div className="hero__cta">
+          <button type="button" className="btn btn--primary" onClick={() => scrollToId('projects')}>
+            See my work
+            <span aria-hidden="true">→</span>
+          </button>
+          <button type="button" className="btn btn--ghost" onClick={() => scrollToId('contact')}>
+            Get in touch
+          </button>
+          <div className="hero__socials">
+            <a href={profile.github} target="_blank" rel="noreferrer" aria-label="GitHub">
+              <i className="fab fa-github" />
+            </a>
+            <a href={profile.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn">
+              <i className="fab fa-linkedin" />
+            </a>
+            <a href={`mailto:${profile.email}`} aria-label="Email">
+              <i className="far fa-envelope" />
+            </a>
+          </div>
+        </div>
+
+        <div className="hero__stats" ref={statsRef}>
+          {stats.map((s, i) => (
+            <Stat key={s.label} stat={s} start={statsVisible} delay={i * 150} />
+          ))}
+        </div>
+      </div>
+
+      <p className="hero__hint mono" aria-hidden="true">
+        move your cursor · click the background
+      </p>
+      <button type="button" className="hero__scroll" onClick={() => scrollToId('about')} aria-label="Scroll to About">
+        <span />
+      </button>
+    </section>
+  );
+}

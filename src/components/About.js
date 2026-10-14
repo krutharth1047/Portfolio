@@ -1,107 +1,78 @@
-import React from 'react'
-import "../App.css";
-import { useScrollAnimation } from '../hooks/useScrollAnimation';
+import React from 'react';
+import Reveal from './Reveal';
+import { profile, education } from '../data/content';
+import { useTilt } from '../hooks/interactions';
 import './styles/About.css';
 
-function About() {
-    const [titleRef, titleVisible] = useScrollAnimation({ threshold: 0.3 });
-    const [contentRef, contentVisible] = useScrollAnimation({ threshold: 0.3 });
+export default function About() {
+  const tilt = useTilt(10);
 
-    return (
-        <div className="about" id="about">
-            <h1 ref={titleRef} className={`fade-in-up ${titleVisible ? 'visible' : ''}`}>About Me</h1>
+  return (
+    <section className="section about" id="about">
+      <div className="container">
+        <Reveal className="section-head">
+          <span className="eyebrow mono">01 · about</span>
+          <h2>Data, finance and a bit of AI</h2>
+        </Reveal>
 
-            <div ref={contentRef} className={`about-container fade-in-up ${contentVisible ? 'visible' : ''}`}>
-                <div className="about-left">
-                    <div className="about-image-wrapper">
-                        <img 
-                            src="images/me.png" 
-                            alt="Krutharth R Kumar - Profile" 
-                            className="about-profile-img"
-                        />
-                        <div className="about-image-glow"></div>
-                    </div>
-                    <div className="about-quick-info">
-                        <div className="quick-info-item">
-                            <span className="quick-icon">📍</span>
-                            <span>Bangalore, India</span>
-                        </div>
-                        <div className="quick-info-item">
-                            <span className="quick-icon">✉️</span>
-                            <span>krutharth07@gmail.com</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="about-right">
-                    <div className="about-bio">
-                        <p className="about-intro">
-                            Hi, I'm <span className="highlight-name">Krutharth R Kumar</span>, a Computer Science 
-                            Engineering student at <strong>BMS Institute of Technology and Management</strong>, graduating in 2026.
-                        </p>
-
-                        <p>
-                            I'm passionate about <strong>Data Engineering</strong> and <strong>Machine Learning</strong>, 
-                            with published research in <strong>IEEE</strong> and <strong>Springer</strong> (Scopus-indexed). 
-                            I'm currently preparing for my <strong>MSc in Big Data Engineering</strong> at  
-<strong>University of Amsterdam & Vrije Universiteit Amsterdam</strong> (2026–2028).
-                        </p>
-
-                        <p>
-                            I've gained hands-on experience through internships at <strong>Deloai</strong> and 
-                            <strong>Igeek Technologies</strong>, building data analytics pipelines and ML systems. 
-                            I also enjoy mentoring peers in Data Structures, Machine Learning, and Database Systems.
-                        </p>
-
-                        <p className="about-closing">
-                            I'm always eager to grow my problem-solving, technical, and leadership skills. 
-                            If you're interested in discussing emerging technologies, innovative products, 
-                            fitness, or anything related to the tech world, I'd love to connect!
-                        </p>
-                    </div>
-
-                    <div className="about-skills-preview">
-                        <span className="skill-pill">Python</span>
-                        <span className="skill-pill">Machine Learning</span>
-                        <span className="skill-pill">Data Engineering</span>
-                        <span className="skill-pill">Deep Learning</span>
-                        <span className="skill-pill">SQL</span>
-                        <span className="skill-pill">Computer Vision</span>
-                    </div>
-                </div>
+        <div className="about__grid">
+          <Reveal className="about__photo-col">
+            <div className="about__photo tilt" {...tilt}>
+              <img src="images/profile.jpg" alt={profile.name} loading="lazy" />
+              <div className="tilt__glare" />
+              <div className="about__photo-tag mono">
+                <span className="pulse-dot" /> {profile.location}
+              </div>
             </div>
+          </Reveal>
 
-            <div className="education-section">
-                <h2>Education</h2>
-                <div className="education-cards">
-                    <div className="edu-card">
-                        <div className="edu-icon">🎓</div>
-                        <h3>University of Amsterdam & VU Amsterdam</h3>
-                        <p className="edu-degree">MSc Big Data Engineering</p>
-                        <p className="edu-year">2026 – 2028 | Netherlands</p>
-                    </div>
-                    <div className="edu-card">
-                        <div className="edu-icon">🏫</div>
-                        <h3>BMS Institute of Technology</h3>
-                        <p className="edu-degree">B.E. Computer Science & Engineering</p>
-                        <p className="edu-year">2022 – 2026 | Bangalore, India</p>
-                        <p className="edu-cgpa">CGPA: 8.42/10</p>
-                    </div>
-                    <div className="edu-card yonsei-card">
-                        <div className="edu-icon">
-                            <img src="images/yonsei-logo.png" alt="Yonsei University" className="yonsei-logo" 
-                                onError={(e) => {e.target.style.display='none'; e.target.parentElement.innerHTML='🌏';}} />
-                        </div>
-                        <h3>Yonsei University</h3>
-                        <p className="edu-degree">Yonsei International Summer School (YISS)</p>
-                        <p className="edu-year">Jun 2026 – Aug 2026 | Seoul, South Korea</p>
-                        <p className="edu-course">Course: Machine Learning</p>
-                        <span className="yonsei-badge">Currently Attending</span>
-                    </div>
-                </div>
-            </div>
+          <div className="about__text">
+            {profile.bio.map((p, i) => (
+              <Reveal as="p" key={i} delay={i * 80} className={i === 0 ? 'lead' : ''}>
+                {p}
+              </Reveal>
+            ))}
+
+            <Reveal delay={260} className="about__facts">
+              <div>
+                <span className="mono muted">based in</span>
+                <strong>{profile.location}</strong>
+              </div>
+              <div>
+                <span className="mono muted">studying</span>
+                <strong>MSc CS · Big Data Eng.</strong>
+              </div>
+              <div>
+                <span className="mono muted">looking for</span>
+                <strong>6-month internship · Feb 2027</strong>
+              </div>
+            </Reveal>
+          </div>
         </div>
-    )
-}
 
-export default About
+        <Reveal className="edu">
+          <h3 className="sub-head mono">education</h3>
+          <ol className="edu__list">
+            {education.map((e, i) => (
+              <Reveal as="li" key={e.school} delay={i * 100} className={`edu__item ${e.current ? 'is-current' : ''}`}>
+                <div className="edu__marker">{e.logo ? <img src={e.logo} alt="" /> : <span />}</div>
+                <div className="edu__body">
+                  <div className="edu__top">
+                    <h4>{e.school}</h4>
+                    <span className="mono muted">{e.dates}</span>
+                  </div>
+                  <p>
+                    {e.degree}
+                    {e.detail && <span className="chip chip--accent">{e.detail}</span>}
+                    {e.current && <span className="chip chip--live">Now</span>}
+                  </p>
+                  <span className="muted small">{e.place}</span>
+                </div>
+              </Reveal>
+            ))}
+          </ol>
+        </Reveal>
+      </div>
+    </section>
+  );
+}

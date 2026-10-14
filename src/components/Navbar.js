@@ -1,57 +1,82 @@
-import React, { useState } from 'react'
-import "./styles/Navbar.css";
-import { Link } from 'react-scroll';
+import React, { useEffect, useState } from 'react';
+import { sections, resumeMailto } from '../data/content';
+import { useActiveSection, scrollToId } from '../hooks/interactions';
+import './styles/Navbar.css';
 
-export function Navbar({header}) {
-	const [click, setClick] = useState(false);
+export function Navbar({ onOpenPalette, simple = false }) {
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const active = useActiveSection(simple ? [] : sections.map((s) => s.id));
+  const isMac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform);
 
-	const handleClick = () => setClick(!click);
-	const closeMobileMenu = () => setClick(false);
+  useEffect(() => {
+    const onScroll = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      setScrolled(window.scrollY > 24);
+      setProgress(max > 0 ? window.scrollY / max : 0);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
-	const subject = "Interested in Resume"
-	const body = `Hi Krutharth,
+  const go = (id) => (e) => {
+    e.preventDefault();
+    setOpen(false);
+    if (simple) {
+      window.location.href = `/#${id}`;
+      return;
+    }
+    scrollToId(id);
+  };
 
-  I was on your personal website and I'm would love for you to send me your resume. Hope to connect!
+  return (
+    <header className={`nav ${scrolled ? 'nav--scrolled' : ''} ${open ? 'nav--open' : ''}`}>
+      <div className="nav__progress" style={{ transform: `scaleX(${progress})` }} />
+      <div className="nav__inner">
+        <a href="/#home" className="nav__logo" onClick={go('home')} aria-label="Back to top">
+          <span className="nav__logo-mark">KRK</span>
+          <span className="nav__logo-dot" />
+        </a>
 
-  Thank you!`
+        <nav className="nav__links" aria-label="Sections">
+          {sections.map((s) => (
+            <a
+              key={s.id}
+              href={`/#${s.id}`}
+              onClick={go(s.id)}
+              className={`nav__link ${active === s.id ? 'is-active' : ''}`}
+            >
+              {s.label}
+            </a>
+          ))}
+          <a className="nav__link nav__link--cv" href={resumeMailto}>
+            Request CV
+          </a>
+        </nav>
 
-	return (
-			<nav className="navbar">
-			{/*Remember to change css so that there's a gap at the top
-			<h1>{header}</h1>*/}
-			<Link onClick={closeMobileMenu} activeClass="active" to="home" spy={true} smooth={true} duration={1000}>
-					<img id="logo" src="images/KRK.png" alt="Logo, initials K.R.K."/>
-			</Link>
-				<div className="navbar-container">
-					{/*toggle icon*/}
-					<div className="menu-icon" onClick={handleClick}>
-						<i className={click ? "fas fa-times" : "fas fa-bars"} />
-					</div>
-					{/*toggle appear/ disappear*/}
-					<ul className={click ? "nav-menu active" : "nav-menu"} >
-						<li className="nav-item">
-							<a className="nav-links" activeClass="active" href={`mailto:krutharth07@gmail.com?subject=${subject}&body=${body}`} target="_blank" without rel="noopener noreferrer">Resume</a>
-						</li>
-						<li className="nav-item">
-							<Link className="nav-links" onClick={closeMobileMenu} activeClass="active" to="about" spy={true} smooth={true} offset={-75} duration={1000}>About</Link>
-						</li>
-						<li className="nav-item">
-							<Link className="nav-links" onClick={closeMobileMenu} activeClass="active" to="experience" spy={true} smooth={true} offset={-70} duration={1000}>Experience</Link>
-						</li>
-						<li className="nav-item">
-							<Link className="nav-links" onClick={closeMobileMenu} activeClass="active" to="research" spy={true} smooth={true} offset={-70} duration={1000}>Research</Link>
-						</li>
-						<li className="nav-item">
-							<Link className="nav-links" onClick={closeMobileMenu} activeClass="active" to="projects" spy={true} smooth={true} offset={-70} duration={1000}>Projects</Link>
-						</li>
-						<li className="nav-item">
-							<Link className="nav-links" onClick={closeMobileMenu} activeClass="active" to="about-card" spy={true} smooth={true} duration={1250}>Contact</Link>
-						</li>
-					</ul>
-				</div>
-			</nav>
-
-	)
+        <div className="nav__actions">
+          {onOpenPalette && (
+            <button type="button" className="nav__kbd" onClick={onOpenPalette} aria-label="Open command palette">
+              <span>{isMac ? '⌘' : 'Ctrl'}</span>
+              <span>K</span>
+            </button>
+          )}
+          <button
+            type="button"
+            className="nav__burger"
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-expanded={open}
+            onClick={() => setOpen((o) => !o)}
+          >
+            <span />
+            <span />
+          </button>
+        </div>
+      </div>
+    </header>
+  );
 }
 
-export default Navbar
+export default Navbar;

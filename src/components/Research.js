@@ -1,50 +1,48 @@
-import React from "react";
-import "../App.css";
-import { useScrollAnimation } from "../hooks/useScrollAnimation";
-import "./styles/Research.css";
+import React from 'react';
+import Reveal from './Reveal';
+import { publications } from '../data/content';
+import { useTilt } from '../hooks/interactions';
+import './styles/Research.css';
+
+function PaperCard({ paper, index }) {
+  const tilt = useTilt(6);
+  return (
+    <Reveal delay={index * 120}>
+      <article className={`card paper tilt ${index === 0 ? 'paper--lead' : ''}`} {...tilt}>
+        <div className="tilt__glare" />
+        <div className="paper__top">
+          <span className={`chip ${index === 0 ? 'chip--accent' : ''}`}>{paper.role}</span>
+          <span className="mono muted">{paper.venue}</span>
+        </div>
+        <h3>{paper.title}</h3>
+        <p>{paper.text}</p>
+        <div className="chips">
+          {paper.tags.map((t) => (
+            <span key={t} className="chip chip--quiet">
+              {t}
+            </span>
+          ))}
+        </div>
+      </article>
+    </Reveal>
+  );
+}
 
 export default function Research() {
-  const [titleRef, titleVisible] = useScrollAnimation({ threshold: 0.3 });
-  const [card1Ref, card1Visible] = useScrollAnimation({ threshold: 0.2 });
-  const [card2Ref, card2Visible] = useScrollAnimation({ threshold: 0.2 });
-
   return (
-    <div className="research" id="research">
-      <h1 ref={titleRef} className={`fade-in-up ${titleVisible ? 'visible' : ''}`}>Research & Publications</h1>
-      <p className="research-subtitle">Peer-reviewed contributions in AI and Machine Learning</p>
-
-      <div className="research-container">
-        <div ref={card1Ref} className={`research-card fade-in-up ${card1Visible ? 'visible' : ''}`}>
-          <div className="research-badge first-author">First Author</div>
-          <div className="research-venue">IEEE CICN 2025</div>
-          <h3>Enhancing Web Document Recommendations with Generative AI</h3>
-          <p>
-            Designed an LLM-based recommendation pipeline optimizing metadata selection. 
-            Improved scalability and personalization through efficient data handling techniques.
-          </p>
-          <div className="research-tags">
-            <span className="tag">LLM</span>
-            <span className="tag">Recommendations</span>
-            <span className="tag">NLP</span>
-          </div>
-        </div>
-
-        <div ref={card2Ref} className={`research-card fade-in-up ${card2Visible ? 'visible' : ''}`}>
-          <div className="research-badge co-author">Co-Author</div>
-          <div className="research-venue">Springer LNNS (Scopus)</div>
-          <h3>Mitigation of Fire Disasters Using Computer Vision and ML</h3>
-          <p>
-            Developed real-time fire detection system using YOLOv5 and Raspberry Pi. 
-            Achieved &gt;90% detection accuracy with &lt;2s response latency. 
-            Integrated automated suppression mechanism with servo-controlled targeting.
-          </p>
-          <div className="research-tags">
-            <span className="tag">YOLOv5</span>
-            <span className="tag">Computer Vision</span>
-            <span className="tag">IoT</span>
-          </div>
+    <section className="section research" id="research">
+      <div className="container">
+        <Reveal className="section-head">
+          <span className="eyebrow mono">04 · research</span>
+          <h2>Publications</h2>
+          <p className="section-sub">Peer-reviewed work in generative AI and computer vision.</p>
+        </Reveal>
+        <div className="papers">
+          {publications.map((p, i) => (
+            <PaperCard key={p.title} paper={p} index={i} />
+          ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }

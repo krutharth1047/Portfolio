@@ -1,125 +1,74 @@
-import { Link } from 'react-scroll';
-import "./styles/Footer.css";
+import React, { useState } from 'react';
+import Reveal from './Reveal';
+import Terminal from './Terminal';
+import { profile, resumeMailto } from '../data/content';
+import './styles/Footer.css';
 
-function Footer({ listThing, year }) {
-  const subject = "Interested in Resume";
-  const body = `Hi Krutharth,
+export function Contact({ focusSignal }) {
+  const [copied, setCopied] = useState(false);
 
-I was on your personal website and I would love for you to send me your resume. Hope to connect!
-
-Thank you!`;
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(profile.email);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1800);
+    } catch {
+      window.location.href = `mailto:${profile.email}`;
+    }
+  };
 
   return (
-    <footer className="footer-container">
-
-      {/* footer link section */}
-      <div className="footer-link-wrapper">
-
-        <div className="footer-link-item" id="about-card">
-          <h2>About</h2>
-
-          <Link className="footer-link" to="home" spy={true} smooth={true} duration={1250}>
-            Home
-          </Link>
-
-          <Link className="footer-link" to="about" spy={true} smooth={true} offset={-70} duration={1250}>
-            About Me
-          </Link>
-
-          <Link className="footer-link" to="experience" spy={true} smooth={true} offset={-70} duration={1250}>
-            Experience
-          </Link>
-
-          <Link className="footer-link" to="research" spy={true} smooth={true} offset={-70} duration={1250}>
-            Research
-          </Link>
-
-          <Link className="footer-link" to="projects" spy={true} smooth={true} offset={-70} duration={1250}>
-            Projects
-          </Link>
-
-          {/* Fixed Resume Link */}
-          <a
-            className="footer-link"
-            href={`mailto:krutharth07@gmail.com?subject=${subject}&body=${body}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Resume
-          </a>
-        </div>
-
-        <div className="footer-link-item" id="dev-card">
-          <h2>Projects</h2>
-
-          <a
-            className="footer-link"
-            href="https://github.com/krutharth1047"
-            target="_blank"
-            rel="noreferrer"
-          >
-            View on GitHub
-          </a>
-
-          <a
-            className="footer-link"
-            href="https://portfolio-two-topaz-96.vercel.app"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Portfolio
-          </a>
-        </div>
-
-      </div>
-      {/* end footer link wrapper */}
-
-      {/* social media section */}
-      <section className="social-media">
-        <div className="social-media-wrap">
-
-          <div className="social-icons">
-
-            <a
-              href="mailto:krutharth07@gmail.com"
-              className="social-icons-link email"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Email"
-            >
-              <i className="far fa-envelope"></i>
+    <section className="section contact" id="contact">
+      <div className="container contact__grid">
+        <Reveal className="contact__text">
+          <span className="eyebrow mono">06 · contact</span>
+          <h2>
+            Let's build something <span className="gradient-text">with data</span>.
+          </h2>
+          <p className="section-sub">
+            I'm looking for a six-month data, analytics engineering or finance-AI internship from February 2027. Happy
+            to chat about pipelines, forecasting or anything in between.
+          </p>
+          <div className="contact__actions">
+            <button type="button" className="btn btn--primary" onClick={copy}>
+              <i className="far fa-copy" /> {copied ? 'Copied!' : profile.email}
+            </button>
+            <a className="btn btn--ghost" href={resumeMailto}>
+              Request my CV
             </a>
-
-            <a
-              href="https://github.com/krutharth1047"
-              className="social-icons-link github"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Github"
-            >
-              <i className="fab fa-github"></i>
-            </a>
-
-            <a
-              href="https://www.linkedin.com/in/krutharth1047/"
-              className="social-icons-link linkedin"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Linkedin"
-            >
-              <i className="fab fa-linkedin"></i>
-            </a>
-
           </div>
+          <div className="contact__links">
+            <a href={profile.github} target="_blank" rel="noreferrer">
+              <i className="fab fa-github" /> GitHub
+            </a>
+            <a href={profile.linkedin} target="_blank" rel="noreferrer">
+              <i className="fab fa-linkedin" /> LinkedIn
+            </a>
+            <span>
+              <i className="fas fa-map-marker-alt" /> {profile.location}
+            </span>
+          </div>
+        </Reveal>
+        <Reveal delay={150}>
+          <Terminal focusSignal={focusSignal} />
+        </Reveal>
+      </div>
+    </section>
+  );
+}
 
-          <small className="website-rights">
-            Created using React &copy; {year} <br />
-            Krutharth R Kumar
-          </small>
-
-        </div>
-      </section>
-
+function Footer({ year }) {
+  return (
+    <footer className="footer">
+      <div className="container footer__inner">
+        <span className="mono small muted">
+          © {year} {profile.name} · built with React
+        </span>
+        <span className="mono small muted">
+          press <kbd>⌘</kbd>
+          <kbd>K</kbd> to jump anywhere
+        </span>
+      </div>
     </footer>
   );
 }
